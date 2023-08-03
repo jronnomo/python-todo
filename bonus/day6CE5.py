@@ -1,0 +1,8 @@
+name = input("What is the name?: ").title()
+file = open('../files/members.txt')
+members = file.readlines()
+members.append(name + '\n')
+file.close()
+file = open('../files/members.txt', 'w')
+file.writelines(members)
+file.close()
