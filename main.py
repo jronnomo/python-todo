@@ -3,7 +3,7 @@ while True:
     user_action = user_action.strip()
     match user_action:
         case 'add':
-            todo = input ("Add a todo: ") + "\n"
+            todo = input("Add a todo: ") + "\n"
 
             file = open('todos.txt', 'r')
             todos = file.readlines()
@@ -18,6 +18,7 @@ while True:
             todos = file.readlines()
             file.close()
             for index, item in enumerate(todos):
+                item = item.strip('\n')
                 row = f"{index+1}) {item}"
                 print(row)
         case 'edit':
