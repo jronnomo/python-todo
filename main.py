@@ -5,14 +5,14 @@ while True:
         case 'add':
             todo = input("Add a todo: ") + "\n"
 
-            file = open('todos.txt', 'r')
-            todos = file.readlines()
-            file.close()
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
 
             todos.append(todo)
-            file = open('todos.txt', 'w')
-            file.writelines(todos)
-            file.close()
+
+            with open('todos.txt', 'w') as file:
+                file.writelines(todos)
+
         case 'show':
             file = open('todos.txt', 'r')
             todos = file.readlines()
@@ -22,15 +22,26 @@ while True:
                 row = f"{index+1}) {item}"
                 print(row)
         case 'edit':
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
+                print(f"Current todos {todos}")
             num_todo = int(input("What number todo to be edited?: "))-1
-            old_todo = todos[num_todo]
+            old_todo = todos[num_todo].strip('\n')
             new_todo = input(f"What would you like to replace {old_todo} with?: ")
-            todos[num_todo] = new_todo
+            todos[num_todo] = new_todo + '\n'
+            with open('todos.txt', 'w') as file:
+                file.writelines(todos)
             print(f"Successfully replaced {old_todo} with {new_todo}")
         case 'complete':
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
+                print(f"Current todos {todos}")
             todo_index = int(input("What number todo did you complete?: "))-1
-            completed_task = todos[todo_index]
+            completed_task = todos[todo_index].strip('\n')
             todos.pop(todo_index)
+            with open('todos.txt', 'w') as file:
+                file.writelines(todos)
+
             print(f"Successfully completed {completed_task}")
         case 'exit':
             break
