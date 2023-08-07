@@ -1,51 +1,46 @@
 while True:
     user_action = input("Type add, show, edit, complete, or exit: ")
     user_action = user_action.strip()
-    match user_action:
-        case 'add':
-            todo = input("Add a todo: ") + "\n"
 
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
-
-            todos.append(todo)
-
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
-
-        case 'show':
-            file = open('todos.txt', 'r')
+    if 'add' in user_action:
+        todo = user_action[4:]
+        with open('todos.txt', 'r') as file:
             todos = file.readlines()
-            file.close()
-            for index, item in enumerate(todos):
-                item = item.strip('\n')
-                row = f"{index+1}) {item}"
-                print(row)
-        case 'edit':
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
-                print(f"Current todos {todos}")
-            num_todo = int(input("What number todo to be edited?: "))-1
-            old_todo = todos[num_todo].strip('\n')
-            new_todo = input(f"What would you like to replace {old_todo} with?: ")
-            todos[num_todo] = new_todo + '\n'
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
-            print(f"Successfully replaced {old_todo} with {new_todo}")
-        case 'complete':
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
-                print(f"Current todos {todos}")
-            todo_index = int(input("What number todo did you complete?: "))-1
-            completed_task = todos[todo_index].strip('\n')
-            todos.pop(todo_index)
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
-
-            print(f"Successfully completed {completed_task}")
-        case 'exit':
-            break
-        case _:
-            print("Underscore is global known else case")
+        with open('todos.txt', 'w') as file:
+            file.writelines(todos)
+            file.write(f'{todo}'+'\n')
+    elif 'show' in user_action:
+        file = open('todos.txt', 'r')
+        todos = file.readlines()
+        file.close()
+        for index, item in enumerate(todos):
+            item = item.strip('\n')
+            row = f"{index+1}) {item}"
+            print(row)
+    elif 'edit' in user_action:
+        todo_index = int(user_action[5:])-1
+        print(todo_index)
+        with open('todos.txt', 'r') as file:
+            todos = file.readlines()
+        print("Your current todos are:" + '\n' + f"{todos}")
+        new_todo = input(f"What do you want to replace {todos[todo_index]} with?: ")
+        todos[todo_index] = new_todo + '\n'
+        with open('todos.txt', 'w') as file:
+            file.writelines(todos)
+        print("Your new list of todos are:" + '\n' + f"{todos}")
+    elif 'complete' in user_action:
+        with open('todos.txt', 'r') as file:
+            todos = file.readlines()
+        print(f"Current todos {todos}")
+        todo_index = int(user_action[9:])-1
+        completed_task = todos[todo_index].strip('\n')
+        todos.pop(todo_index)
+        with open('todos.txt', 'w') as file:
+            file.writelines(todos)
+        print(f"Successfully completed {completed_task}")
+    elif 'exit' in user_action:
+        break
+    else:
+        print("This command is not valid")
 
 print("Bye")
