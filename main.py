@@ -1,18 +1,26 @@
+def get_todos():
+    with open('todos.txt', 'r') as file:
+        todos = file.readlines()
+        return todos
+
+
 while True:
+    todos = get_todos()
+    print(f"Here are your todos {todos}")
     user_action = input("Type add, show, edit, complete, or exit: ")
     user_action = user_action.strip()
 
     if user_action.startswith('add'):
         todo = user_action[4:]
-        with open('todos.txt', 'r') as file:
-            todos = file.readlines()
+
+        todos = get_todos()
+
         with open('todos.txt', 'w') as file:
             file.writelines(todos)
             file.write(f'{todo}'+'\n')
     elif user_action.startswith('show'):
-        file = open('todos.txt', 'r')
-        todos = file.readlines()
-        file.close()
+        todos = get_todos()
+
         for index, item in enumerate(todos):
             item = item.strip('\n')
             row = f"{index+1}) {item}"
@@ -20,9 +28,7 @@ while True:
     elif user_action.startswith('edit'):
         try:
             todo_index = int(user_action[5:])-1
-            print(todo_index)
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
+            todos = get_todos()
             print("Your current todos are:" + '\n' + f"{todos}")
             new_todo = input(f"What do you want to replace {todos[todo_index]} with?: ")
             todos[todo_index] = new_todo + '\n'
@@ -33,9 +39,7 @@ while True:
             print("Please enter a command verb followed by a number")
     elif user_action.startswith('complete'):
         try:
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
-            print(f"Current todos {todos}")
+            todos = get_todos()
             todo_index = int(user_action[9:])-1
             completed_task = todos[todo_index].strip('\n')
             todos.pop(todo_index)
@@ -43,8 +47,10 @@ while True:
                 file.writelines(todos)
             print(f"Successfully completed {completed_task}")
         except IndexError:
-            todo_num = int(user_action[9:])
-            print(f"There's no task {todo_num} in the list")
+            todo_request = user_action[9:]
+            print(f"There's no task {todo_request} in the list")
+        except ValueError:
+            print("Not a valid request. Please retry.")
     elif user_action.startswith('exit '):
         break
     else:
