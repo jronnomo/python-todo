@@ -5,7 +5,7 @@ def get_nums():
     return nums
 
 
-def get_avg():
+def get_avg(nums):
     nums = get_nums()
     total_nums = len(get_nums())
     total_sum = sum(nums)
@@ -13,6 +13,7 @@ def get_avg():
     print(avg)
 
 
-get_avg()
+nums = get_nums()
+get_avg(nums)
 
 
