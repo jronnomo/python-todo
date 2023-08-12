@@ -1,18 +1,8 @@
-def get_todos(filepath="todos.txt"):
-    """"Reads a text files and returns a todo list"""
-    with open(filepath, 'r') as file_local:
-        todos_local = file_local.readlines()
-        return todos_local
-
-
-def write_todos(todos_arg, filepath="todos.txt"):
-    """"Write the to-do items to a text file"""
-    with open(filepath, 'w') as file_local:
-        file_local.writelines(todos_arg)
-
+#from functions import get_todos, write_todos
+import functions
 
 while True:
-    todos = get_todos()
+    todos = functions.get_todos()
     print(f"Here are your todos {todos}")
     user_action = input("Type add, show, edit, complete, or exit: ")
     user_action = user_action.strip()
@@ -20,13 +10,13 @@ while True:
     if user_action.startswith('add'):
         todo = user_action[4:]
 
-        todos = get_todos()
+        todos = functions.get_todos()
         todos.append(todo + '\n')
 
-        write_todos(todos)
+        functions.write_todos(todos)
 
     elif user_action.startswith('show'):
-        todos = get_todos()
+        todos = functions.get_todos()
 
         for index, item in enumerate(todos):
             item = item.strip('\n')
@@ -35,21 +25,21 @@ while True:
     elif user_action.startswith('edit'):
         try:
             todo_index = int(user_action[5:])-1
-            todos = get_todos()
+            todos = functions.get_todos()
             print("Your current todos are:" + '\n' + f"{todos}")
             new_todo = input(f"What do you want to replace {todos[todo_index]} with?: ")
             todos[todo_index] = new_todo + '\n'
-            write_todos(todos)
+            functions.write_todos(todos)
             print("Your new list of todos are:" + '\n' + f"{todos}")
         except ValueError:
             print("Please enter a command verb followed by a number")
     elif user_action.startswith('complete'):
         try:
-            todos = get_todos()
+            todos = functions.get_todos()
             todo_index = int(user_action[9:])-1
             completed_task = todos[todo_index].strip('\n')
             todos.pop(todo_index)
-            write_todos(todos)
+            functions.write_todos(todos)
             print(f"Successfully completed {completed_task}")
         except IndexError:
             todo_request = user_action[9:]
