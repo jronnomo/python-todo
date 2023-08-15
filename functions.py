@@ -12,3 +12,11 @@ def write_todos(todos_arg, filepath=FILEPATH):
     """"Write the to-do items to a text file"""
     with open(filepath, 'w') as file_local:
         file_local.writelines(todos_arg)
+
+
+def display_todos(window, todos_arg):
+    """Display todos to the GUI"""
+    display_string = ""
+    for index, item in enumerate(todos_arg):
+        display_string += f"{index+1} {item}, "
+    window['-OUTPUT-'].update(display_string.rstrip(', '))
