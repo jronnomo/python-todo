@@ -18,5 +18,5 @@ def display_todos(window, todos_arg):
     """Display todos to the GUI"""
     display_string = ""
     for index, item in enumerate(todos_arg):
-        display_string += f"{index+1} {item}, "
-    window['-OUTPUT-'].update(display_string.rstrip(', '))
+        display_string += f"{index+1}) {item.strip()}, "
+        window['-OUTPUT-'].update(display_string.rstrip(', '))
