@@ -1,21 +1,16 @@
 import functions
 import PySimpleGUI as sg
 import time
-import os
-
-if not os.path.exists('todos.txt'):
-    with open('todos.txt', 'w') as file:
-        pass
 
 sg.theme('DarkTeal3')
 # Define the window's contents
 layout = [[sg.Text('', key='-CLOCK-')],
           [sg.Input(size=(30, 5),key='-INPUT-'),
-          sg.Button('Add')],
+          sg.Button(size=3, image_source='add.png', tooltip='Add todo', key='Add')],
           [sg.Listbox(size=(30, 5), key='-TODOS-', values=functions.get_todos(), enable_events=True)],
            [sg.Button('Show'),
            sg.Button('Edit'),
-           sg.Button('Complete'),
+           sg.Button(size=3, image_source='complete.png', tooltip='Complete todo', key='Complete'),
            sg.Button('Quit')],
           [sg.Text(size=(30, 1), key='-OUTPUT-')]]
 
