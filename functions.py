@@ -19,4 +19,5 @@ def display_todos(window, todos_arg):
     display_string = ""
     for index, item in enumerate(todos_arg):
         display_string += f"{index+1}) {item.strip()}, "
-        window['-OUTPUT-'].update(display_string.rstrip(', '))
+        print(display_string)
+        window['-TODOS-'].update(display_string.rstrip(', '))
