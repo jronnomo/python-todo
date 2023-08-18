@@ -1,28 +1,30 @@
 import functions
 import PySimpleGUI as sg
+import time
 
-
+sg.theme('DarkTeal3')
 # Define the window's contents
-layout = [[sg.Text("Type in a to-do: ")],
-          [sg.Input(size=(40, 5),key='-INPUT-'),
+layout = [[sg.Text('', key='-CLOCK-')],
+          [sg.Input(size=(30, 5),key='-INPUT-'),
           sg.Button('Add')],
-          [sg.Listbox(size=(40, 10), key='-TODOS-', values=functions.get_todos(), enable_events=True)],
+          [sg.Listbox(size=(30, 5), key='-TODOS-', values=functions.get_todos(), enable_events=True)],
            [sg.Button('Show'),
            sg.Button('Edit'),
            sg.Button('Complete'),
            sg.Button('Quit')],
-          [sg.Text(size=(40, 1), key='-OUTPUT-')]]
+          [sg.Text(size=(30, 1), key='-OUTPUT-')]]
 
 # Create the window
 window = sg.Window('Todo App',
                    layout,
                    font=("Helvetica", 20))
 
+now = time.strftime("%b %d, %Y %H:%M:%S")
+
 # Display and interact with the Window using an Event Loop
 while True:
-    event, values = window.read()
-    print(event)
-    print(values)
+    event, values = window.read(timeout=100)
+    window['-CLOCK-'].update(value=time.strftime("%b %d, %Y %H:%M:%S"))
     # See if user wants to quit or window was closed
     if event == sg.WINDOW_CLOSED or event == 'Quit':
         break
